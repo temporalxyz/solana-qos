@@ -1,0 +1,31 @@
+[package]
+name = "solana-qos-tile"
+version.workspace = true
+authors.workspace = true
+license.workspace = true
+edition.workspace = true
+
+[[bin]]
+name = "qos"
+path = "src/main.rs"
+
+[features]
+demo = []
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = { workspace = true, features = ["derive"] }
+ctrlc = { workspace = true }
+env_logger = { workspace = true }
+libc = { workspace = true }
+log = { workspace = true }
+qos-lru = { workspace = true }
+qos-model = { workspace = true }
+que = { workspace = true }
+solana-qos-common = { workspace = true }
+solana-qos-core = { workspace = true }
+timer = { workspace = true }
+
+[dev-dependencies]
+bincode = "1.3.3"

@@ -1,18 +1,73 @@
-[package]
-name = "qos-model"
+[workspace]
+resolver = "2"
+members = [
+    "cli",
+    "common",
+#    "engine",
+    "engine-ipc",
+    "ipc-demo",
+    "lru", 
+    "minmax",
+    "model",
+    "mpsc",
+    "packet-analysis", 
+    "qos", "qos-core",
+    #"svm-transaction",
+    "std-demo",
+    "timer",
+    #"transaction-view",
+]
+
+[workspace.package]
 version = "0.1.0"
+authors = ["Cavey Cool <cavey@temporal.xyz>"]
+license = "MIT OR APACHE-2.0"
 edition = "2021"
 
-
-[dependencies]
-fd_bs58 = "0.1.0"
-ordered-float = "4.2.0"
-
-[dev-dependencies]
+[workspace.dependencies]
+agave-transaction-view = "2.1.4"
+ahash = "0.8.11"
+base64 = "0.22.1"
+bincode = "1.3.3"
+bytemuck = "1.17.0"
+chrono = "0.4.0"
+clap = "4.0"
+color-eyre = "0.6.3"
 criterion = "0.5.1"
-rand = "0.8.5"
+ctrlc = "3.4.5"
+deadpool-postgres = "0.9"
+derivative = "2.2.0"
+dotenv = "0.15.0"
+env_logger = "0.11.3"
+fd_bs58 = "0.1.0"
+lib-sokoban = "0.3.3"
+libc = "0.2.158"
+likely_stable = "0.1.2"
+log = "0.4.22"
+mock-tx-engine = { path = "engine" }
+mpsc = { path = "mpsc" }
+ndarray = "0.16.1"
+ndarray-npz = "0.3.0"
+nohash-hasher = "0.2.0"
+ordered-float = "4.2.0"
+qos-lru = { path = "lru" }
+qos-minmax = { path = "minmax" }
+qos-model = { path = "model" }
+que = "0.2.0"
+rand = "0.8.0"
+rand_distr = "0.4.3"
+ratatui = "0.28.1"
+rtrb = "0.3.1"
+serde = "1.0"
+solana-qos-common = { path = "common" }
+solana-qos-core = { path = "qos-core" }
+solana-sdk = "2.1.4"
+timer = { path = "timer" }
+tokio-postgres = "0.7"
+xxhash-rust = { version = "0.8.12", features = ["const_xxh3", "xxh3"] }
 
-
-[[bench]]
-name = "evaluation"
-harness = false
+[profile.release]
+lto = "fat"
+codegen-units = 1
+debug = "full"
+strip = "none"

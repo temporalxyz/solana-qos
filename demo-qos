@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Check if the first argument starts with "--target-pps"
+if [[ "$1" == --target-pps* ]]; then
+  target_pps="$1 $2"
+  shift 2  # Shift past the first two arguments (the flag and its value)
+else
+  target_pps=""
+fi
+
+# Run the executable with or without the optional flag
+sudo target/release/qos --use-huge-pages --xxhash-seed 42 $target_pps "$@"

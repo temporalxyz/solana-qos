@@ -1,0 +1,21 @@
+[package]
+name = "engine-ipc"
+version.workspace = true
+authors.workspace = true
+license.workspace = true
+edition.workspace = true
+
+[features]
+default = ["demo"]
+demo = ["mock-tx-engine/demo"]
+
+[dependencies]
+agave-transaction-view = { workspace = true }
+clap = { workspace = true, features = ["derive"] }
+color-eyre = { workspace = true }
+mock-tx-engine = { workspace = true }
+que = { workspace = true }
+ratatui = { workspace = true }
+solana-qos-common = { workspace = true }
+solana-qos-core = { workspace = true }
+timer = { workspace = true }

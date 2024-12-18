@@ -1,0 +1,2 @@
+./target/release/packet-analysis
+python3 packet-analysis.py

@@ -1,0 +1,31 @@
+[package]
+name = "solana-qos-common"
+version.workspace = true
+authors.workspace = true
+license.workspace = true
+edition.workspace = true
+
+[dependencies]
+ahash = { workspace = true }
+bytemuck = { workspace = true, features = ["derive"] }
+derivative = { workspace = true }
+libc = { workspace = true }
+ordered-float = { workspace = true, features = ["bytemuck"] }
+qos-lru = { workspace = true }
+solana-sdk = { workspace = true }
+xxhash-rust = { workspace = true }
+
+[dev-dependencies]
+blake3 = "1.5"
+criterion = "0.5.1"
+fast-lru = "0.1.2"
+lru = "0.12.4"
+nohash-hasher = "0.2.0"
+
+[[bench]]
+name = "hash"
+harness = false
+
+[[bench]]
+name = "lru"
+harness = false

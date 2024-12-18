@@ -1,0 +1,21 @@
+[package]
+name = "qos-minmax"
+version.workspace = true
+authors.workspace = true
+license.workspace = true
+edition.workspace = true
+
+[dependencies]
+# The version on git has two notable changes that result in ≈15% higher perf
+# 1) omits bounds checks when accessing elements within the inner vec
+# 2) assert! --> debug_assert!
+min-max-heap = { git = "https://github.com/tov/min-max-heap-rs.git" }
+
+
+[dev-dependencies]
+criterion = { workspace = true }
+rand = { workspace = true }
+
+[[bench]]
+name = "bench"
+harness = false

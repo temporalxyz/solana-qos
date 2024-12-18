@@ -1,0 +1,12 @@
+[package]
+name = "std-demo"
+version.workspace = true
+authors.workspace = true
+license.workspace = true
+edition.workspace = true
+
+[dependencies]
+color-eyre = { workspace = true }
+ratatui = { workspace = true }
+solana-qos-common = { workspace = true }
+timer = { workspace = true }

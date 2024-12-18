@@ -1,0 +1,1 @@
+sudo target/release/engine-ipc --use-huge-pages --xxhash-seed 42 --write-to-file --threads-per-generator 1

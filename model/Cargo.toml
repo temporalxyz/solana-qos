@@ -1,0 +1,24 @@
+[package]
+name = "qos-model"
+version = "0.1.0"
+edition = "2021"
+
+
+[dependencies]
+bytemuck = { workspace = true }
+fd_bs58 = { workspace = true }
+lib-sokoban = { workspace = true }
+ordered-float = { workspace = true, features = ["bytemuck"] }
+solana-qos-common = { workspace = true }
+
+[dev-dependencies]
+criterion = "0.5.1"
+rand = "0.8.5"
+
+[[bench]]
+name = "evaluation"
+harness = false
+
+[[bench]]
+name = "lookup"
+harness = false
