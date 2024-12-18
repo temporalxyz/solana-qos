@@ -38,6 +38,7 @@ After properly installing the sidecar into a process, such as the `agave-validat
 2. Failed sigverify signals
 3. Completed scheduled signals
 4. (Optional) recently confirmed signatures
+   
 as well as a consumer for the output of the sidecar [^1], follow these instructions.
 
 ### 0. Preallocate Huge Pages
