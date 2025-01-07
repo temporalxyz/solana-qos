@@ -191,6 +191,7 @@ fn main() {
             &mut qos_tx_partial_metas,
             &mut qos_tx_complete_metas,
             &mut qos_model,
+            &mut stats,
             args.max_signers,
             args.max_ips,
         );
@@ -229,11 +230,10 @@ fn consume_remaining_metas(
     >,
     qos_tx_complete_metas: &mut Vec<QoSTransactionMeta<()>>,
     qos_model: &mut IpSignerModel<16384, 16384>,
+    stats: &mut Stats,
     max_signers: usize,
     max_ips: usize,
 ) {
-    static mut COMPLETED: usize = 0;
-
     while let Some(remaining_meta) = sch_consumer.pop() {
         // Merge meta if still in LRU.
         if let Some((_packet_hash, partial_meta)) =
@@ -247,15 +247,13 @@ fn consume_remaining_metas(
             }
             qos_tx_complete_metas.push(complete_entry);
 
-            unsafe {
-                COMPLETED += 1;
-                if COMPLETED % 1_000_000 == 0 {
-                    log::info!(
-                        "fully processed {} transactions",
-                        COMPLETED
-                    );
-                }
-            };
+            stats.completed += 1;
+            if stats.completed % 1_000_000 == 0 {
+                log::info!(
+                    "fully processed {} transactions",
+                    stats.completed
+                );
+            }
 
             // TODO: there may be a better way to do this and
             // I don't like this hardcoded threshold

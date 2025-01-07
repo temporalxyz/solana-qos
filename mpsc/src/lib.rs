@@ -1,15 +1,24 @@
-//! A fast wait-free mpsc. Not fair, not fifo. It's simply a wrapper
-//! around multiple wait-free spsc with all the consumer ends held by a
+//! A fast mpsc. Not fair, not fifo. It's simply a wrapper
+//! around multiple spsc with all the consumer ends held by a
 //! single consumer.
+use bytemuck::Pod;
+use que::{
+    error::QueError,
+    headless_spmc::{
+        consumer::Consumer as QueConsumer,
+        producer::Producer as QueProducer,
+    },
+    page_size::PageSize,
+};
 
-pub use rtrb::Producer;
-
-pub struct Consumer<T> {
-    pub consumers: Vec<rtrb::Consumer<T>>,
+pub struct Consumer<T, const CAP_PER_CHANNEL: usize> {
+    pub consumers: Vec<QueConsumer<T, CAP_PER_CHANNEL>>,
     pub last: usize,
 }
 
-impl<T> Consumer<T> {
+impl<T: Pod, const CAP_PER_CHANNEL: usize>
+    Consumer<T, CAP_PER_CHANNEL>
+{
     /// This is an unfair (non-fifo) pop
     pub fn pop(&mut self) -> Option<T> {
         let len = self.consumers.len();
@@ -22,41 +31,48 @@ impl<T> Consumer<T> {
             .chain(left.iter_mut())
             .find_map(|consumer| {
                 visited += 1;
-                consumer.pop().ok()
+                consumer.pop()
             });
 
         self.last = (self.last + visited) % len;
 
         opt
     }
-
-    /// Chains together the iterators of the underlying spsc channels.
-    /// When this returns None, there may still exist elements in some
-    /// of the spscs consumed earlier.
-    pub fn take_all<'a>(&'a mut self) -> impl Iterator<Item = T> + 'a {
-        self.consumers
-            .iter_mut()
-            .map(|c| {
-                c.read_chunk(c.slots())
-                    .unwrap()
-                    .into_iter()
-            })
-            .flatten()
-    }
 }
 
-pub fn bounded<T: Send>(
+pub fn bounded<T: Pod, const CAP_PER_CHANNEL: usize>(
     senders: usize,
-    cap_per_sender: usize,
-) -> (Vec<Producer<T>>, Consumer<T>) {
+    base_name: &str,
+    #[cfg(target_os = "linux")] page_size: PageSize,
+) -> Result<
+    (
+        Vec<QueProducer<T, CAP_PER_CHANNEL>>,
+        Consumer<T, CAP_PER_CHANNEL>,
+    ),
+    QueError,
+> {
     let mut consumers = vec![];
     let mut producers = vec![];
 
-    for _ in 0..senders {
-        let (p, c) = rtrb::RingBuffer::new(cap_per_sender);
+    for i in 0..senders {
+        let shmem_id = format!("{base_name}_{i:03}");
+        let p = unsafe {
+            QueProducer::join_or_create_shmem(
+                &shmem_id,
+                #[cfg(target_os = "linux")]
+                page_size,
+            )?
+        };
+        let c = unsafe {
+            QueConsumer::join_shmem(
+                &shmem_id,
+                #[cfg(target_os = "linux")]
+                page_size,
+            )?
+        };
         producers.push(p);
         consumers.push(c);
     }
 
-    (producers, Consumer { consumers, last: 0 })
+    Ok((producers, Consumer { consumers, last: 0 }))
 }

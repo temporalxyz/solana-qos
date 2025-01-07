@@ -3,19 +3,18 @@ resolver = "2"
 members = [
     "cli",
     "common",
-#    "engine",
+    "engine",
     "engine-ipc",
     "ipc-demo",
-    "lru", 
+    "lru",
     "minmax",
     "model",
     "mpsc",
-    "packet-analysis", 
-    "qos", "qos-core",
-    #"svm-transaction",
+    "packet-analysis",
+    "qos",
+    "qos-core",
     "std-demo",
     "timer",
-    #"transaction-view",
 ]
 
 [workspace.package]
@@ -57,7 +56,6 @@ que = "0.2.0"
 rand = "0.8.0"
 rand_distr = "0.4.3"
 ratatui = "0.28.1"
-rtrb = "0.3.1"
 serde = "1.0"
 solana-qos-common = { path = "common" }
 solana-qos-core = { path = "qos-core" }

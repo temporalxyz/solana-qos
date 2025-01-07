@@ -57,6 +57,7 @@ pub struct Stats {
     pub duplicate_packets: usize,
     pub banking_transmissions: usize,
     pub zero_score: usize,
+    pub completed: usize,
 }
 
 impl Stats {

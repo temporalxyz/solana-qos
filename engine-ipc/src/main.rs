@@ -2,7 +2,7 @@ use std::{
     fs::File,
     io::{BufWriter, Write},
     path::Path,
-    sync::atomic::Ordering,
+    sync::atomic::{AtomicBool, Ordering},
     thread::Builder,
 };
 
@@ -47,6 +47,9 @@ pub struct Args {
     #[clap(long, default_value_t = false)]
     write_to_file: bool,
 }
+
+pub static START: AtomicBool = AtomicBool::new(false);
+
 fn main() {
     // Parse cli arguments
     let args = Args::parse();
@@ -58,6 +61,7 @@ fn main() {
         args.use_huge_pages,
         args.threads_per_generator,
         args.write_to_file,
+        &START,
     )
     .unwrap();
     let fwd_engine = Engine::<IPC_FWD_TO_QOS_CAP>::initialize(
@@ -66,6 +70,7 @@ fn main() {
         args.use_huge_pages,
         args.threads_per_generator,
         args.write_to_file,
+        &START,
     )
     .unwrap();
 
@@ -140,6 +145,8 @@ fn main() {
     let mock_banking = Builder::new()
         .name("mockBanking".to_string())
         .spawn(move || {
+            while !START.load(Ordering::Relaxed) {}
+
             // xxHasher
             let xxhasher =
                 xxHasher::initialize_with_seed(args.xxhash_seed);
@@ -149,7 +156,6 @@ fn main() {
             let mut sched = 0_usize;
 
             let mut file = args.write_to_file.then(|| {
-                std::fs::create_dir("packet-data").ok();
                 BufWriter::with_capacity(
                     8 * 1024,
                     File::create(
@@ -259,6 +265,9 @@ fn main() {
             }
         })
         .unwrap();
+
+    std::fs::create_dir_all("packet-data").ok();
+    START.store(true, Ordering::Release);
 
     #[cfg(feature = "demo")]
     tui::FlowGraph::run(shared_stats);

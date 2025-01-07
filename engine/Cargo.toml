@@ -12,10 +12,9 @@ demo = []
 [dependencies]
 bincode = { workspace = true }
 mpsc = { workspace = true }
-que = { workspace  = true }
+que = { workspace = true }
 rand = { workspace = true }
 rand_distr = { workspace = true }
-rtrb = { workspace = true }
 solana-qos-common = { workspace = true }
 solana-qos-core = { workspace = true }
 solana-sdk = { workspace = true }

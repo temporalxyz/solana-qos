@@ -6,4 +6,5 @@ license.workspace = true
 edition.workspace = true
 
 [dependencies]
-rtrb = { workspace = true }
+bytemuck = { workspace = true }
+que = { workspace = true }
