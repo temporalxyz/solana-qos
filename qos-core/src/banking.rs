@@ -23,12 +23,10 @@ pub struct TransactionContainer {
 
     /// Records the time the transmitter last sent a batch of high
     /// priority transactions to the sigverify stage.
-    pub last_send: Timer,
-
-    pub last_drop_log: usize,
+    last_send: Timer,
 
     /// Max number of packets per loop to transmit to banking stage
-    pub max_send: usize,
+    max_send: usize,
 }
 
 impl TransactionContainer {
@@ -43,7 +41,6 @@ impl TransactionContainer {
             transmitter,
             priority_queue_heap: MinMaxHeap::new(),
             last_send: Timer::new(),
-            last_drop_log: 0,
             max_send: target_pps * Self::SEND_INTERVAL_MS / 1000,
         }
     }
