@@ -26,7 +26,7 @@ edition = "2021"
 
 [workspace.dependencies]
 agave-transaction-view = "2.1.4"
-ahash = "0.8.11"
+ahash = "0.8.10"
 base64 = "0.22.1"
 bincode = "1.3.3"
 bytemuck = "1.17.0"
