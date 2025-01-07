@@ -41,7 +41,7 @@ dotenv = "0.15.0"
 env_logger = "0.11.3"
 fd_bs58 = "0.1.0"
 lib-sokoban = "0.3.3"
-libc = "0.2.158"
+libc = "0.2.155"
 likely_stable = "0.1.2"
 log = "0.4.22"
 mock-tx-engine = { path = "engine" }
