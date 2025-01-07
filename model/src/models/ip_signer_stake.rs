@@ -5,7 +5,9 @@ use crate::{
 
 use ordered_float::OrderedFloat;
 use sokoban::{NodeAllocatorMap, RedBlackTree};
-use solana_qos_common::transaction_meta::{QoSTransactionMeta, F64};
+use solana_qos_internal_common::transaction_meta::{
+    QoSTransactionMeta, F64,
+};
 
 use std::{
     borrow::Borrow,

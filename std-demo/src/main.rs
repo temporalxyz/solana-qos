@@ -7,10 +7,6 @@ use std::{
     time::Duration,
 };
 
-// use que::{
-//     shmem::Shmem,
-//     spsc::{consumer::Consumer, producer::Producer, SPSC},
-// };
 use ratatui::{
     crossterm::event::{self, Event, KeyCode},
     widgets::Paragraph,

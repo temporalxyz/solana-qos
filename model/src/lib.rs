@@ -3,7 +3,7 @@ pub mod models;
 
 use bytemuck::{Pod, Zeroable};
 use ordered_float::OrderedFloat;
-use solana_qos_common::transaction_meta::F64;
+use solana_qos_internal_common::transaction_meta::F64;
 
 pub const ONE: F64 = OrderedFloat(1.0);
 pub const ZERO: F64 = OrderedFloat(0.0);

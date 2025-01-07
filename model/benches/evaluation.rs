@@ -9,7 +9,7 @@ use qos_model::{
     },
 };
 use rand::{seq::SliceRandom, thread_rng};
-use solana_qos_common::transaction_meta::QoSTransactionMeta;
+use solana_qos_internal_common::transaction_meta::QoSTransactionMeta;
 
 fn ip_signer(c: &mut Criterion) {
     // Fetch mock ip signer model

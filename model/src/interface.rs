@@ -1,4 +1,6 @@
-use solana_qos_common::transaction_meta::{QoSTransactionMeta, F64};
+use solana_qos_internal_common::transaction_meta::{
+    QoSTransactionMeta, F64,
+};
 
 pub trait QoSModel {
     type AdditionalArgs;

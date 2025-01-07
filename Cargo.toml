@@ -13,6 +13,7 @@ members = [
     "packet-analysis",
     "qos",
     "qos-core",
+    "internal-common",
     "std-demo",
     "timer",
 ]
@@ -59,6 +60,7 @@ ratatui = "0.28.1"
 serde = "1.0"
 solana-qos-common = { path = "common" }
 solana-qos-core = { path = "qos-core" }
+solana-qos-internal-common = { path = "internal-common" }
 solana-sdk = "2.1.4"
 timer = { path = "timer" }
 tokio-postgres = "0.7"

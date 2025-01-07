@@ -992,6 +992,7 @@ dependencies = [
  "ratatui",
  "solana-qos-common",
  "solana-qos-core",
+ "solana-qos-internal-common",
  "timer",
 ]
 
@@ -1294,6 +1295,7 @@ dependencies = [
  "que",
  "ratatui",
  "solana-qos-common",
+ "solana-qos-internal-common",
  "timer",
 ]
 
@@ -1571,6 +1573,7 @@ dependencies = [
  "rand_distr",
  "solana-qos-common",
  "solana-qos-core",
+ "solana-qos-internal-common",
  "solana-sdk",
  "timer",
  "xxhash-rust",
@@ -2042,6 +2045,7 @@ dependencies = [
  "ordered-float",
  "rand 0.8.5",
  "solana-qos-common",
+ "solana-qos-internal-common",
 ]
 
 [[package]]
@@ -2891,17 +2895,10 @@ name = "solana-qos-common"
 version = "0.1.0"
 dependencies = [
  "ahash",
- "blake3",
  "bytemuck",
- "criterion",
  "derivative",
- "fast-lru",
  "libc",
- "lru",
- "nohash-hasher",
  "ordered-float",
- "qos-lru",
- "solana-sdk",
  "xxhash-rust",
 ]
 
@@ -2918,8 +2915,29 @@ dependencies = [
  "qos-model",
  "que",
  "solana-qos-common",
+ "solana-qos-internal-common",
  "solana-sdk",
  "timer",
+]
+
+[[package]]
+name = "solana-qos-internal-common"
+version = "0.1.0"
+dependencies = [
+ "ahash",
+ "blake3",
+ "bytemuck",
+ "criterion",
+ "derivative",
+ "fast-lru",
+ "libc",
+ "lru",
+ "nohash-hasher",
+ "ordered-float",
+ "qos-lru",
+ "solana-qos-common",
+ "solana-sdk",
+ "xxhash-rust",
 ]
 
 [[package]]
@@ -2937,6 +2955,7 @@ dependencies = [
  "que",
  "solana-qos-common",
  "solana-qos-core",
+ "solana-qos-internal-common",
  "timer",
 ]
 
@@ -3192,6 +3211,7 @@ dependencies = [
  "color-eyre",
  "ratatui",
  "solana-qos-common",
+ "solana-qos-internal-common",
  "timer",
 ]
 

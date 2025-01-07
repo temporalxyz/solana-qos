@@ -10,6 +10,7 @@ fd_bs58 = { workspace = true }
 lib-sokoban = { workspace = true }
 ordered-float = { workspace = true, features = ["bytemuck"] }
 solana-qos-common = { workspace = true }
+solana-qos-internal-common = { workspace = true }
 
 [dev-dependencies]
 criterion = "0.5.1"

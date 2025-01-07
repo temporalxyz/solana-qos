@@ -17,6 +17,7 @@ rand = { workspace = true }
 rand_distr = { workspace = true }
 solana-qos-common = { workspace = true }
 solana-qos-core = { workspace = true }
+solana-qos-internal-common = { workspace = true }
 solana-sdk = { workspace = true }
 timer = { workspace = true }
 xxhash-rust = { workspace = true }

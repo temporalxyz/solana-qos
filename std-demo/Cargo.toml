@@ -9,4 +9,5 @@ edition.workspace = true
 color-eyre = { workspace = true }
 ratatui = { workspace = true }
 solana-qos-common = { workspace = true }
+solana-qos-internal-common = { workspace = true }
 timer = { workspace = true }

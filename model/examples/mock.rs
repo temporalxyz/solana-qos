@@ -1,5 +1,5 @@
 use qos_model::models::ip_signer::IpSignerModel;
-use solana_qos_common::transaction_meta::QoSTransactionMeta;
+use solana_qos_internal_common::transaction_meta::QoSTransactionMeta;
 
 fn main() {
     // Load some pretrained model

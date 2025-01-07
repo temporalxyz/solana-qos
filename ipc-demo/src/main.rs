@@ -15,10 +15,8 @@ use ratatui::{
     widgets::Paragraph,
     DefaultTerminal, Frame,
 };
-use solana_qos_common::{
-    checked_drop_privileges,
-    packet_bytes::{PacketBytes, PACKET_SIZE},
-};
+use solana_qos_common::checked_drop_privileges;
+use solana_qos_common::packet_bytes::{PacketBytes, PACKET_SIZE};
 use timer::Timer;
 
 const N: usize = 16384;

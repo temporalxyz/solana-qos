@@ -13,11 +13,11 @@ use rand::seq::SliceRandom;
 use rng::FastxxHashRng;
 use solana_qos_core::get_page_size;
 
-use solana_qos_common::{
-    packet_bytes::PacketBytes, shared_stats::EngineStats,
-};
+use solana_qos_common::packet_bytes::PacketBytes;
+use solana_qos_common::shared_stats::EngineStats;
 
 use mpsc::{self, Consumer};
+use solana_qos_internal_common::packet_bytes;
 use timer::Timer;
 
 pub mod agent;
@@ -173,8 +173,8 @@ pub fn initialize_generator_threads(
                     }
 
                     // Send packets (one dup)
-                    producer.push(PacketBytes::from_packet(&packet));
-                    producer.push(PacketBytes::from_packet(&packet));
+                    producer.push(packet_bytes::from_packet(&packet));
+                    producer.push(packet_bytes::from_packet(&packet));
                 }
             });
         },

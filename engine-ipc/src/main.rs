@@ -27,6 +27,7 @@ use solana_qos_common::{
     xxhash::xxHasher,
 };
 use solana_qos_core::{get_page_size, sig_bytes};
+use solana_qos_internal_common::{packet_bytes, xxhash::packet_hash};
 
 #[cfg(feature = "demo")]
 mod tui;
@@ -168,12 +169,13 @@ fn main() {
             let mut i = 0_usize;
             loop {
                 if let Some(packet_bytes) = banking_consumer.pop() {
-                    let mut packet = packet_bytes.as_packet();
+                    let mut packet =
+                        packet_bytes::as_packet(packet_bytes);
                     received += 1;
 
                     // Calculate hash for key and pseudo rng
                     let packet_hash: u64 =
-                        xxhasher.packet_hash(&packet);
+                        packet_hash(&xxhasher, &packet);
 
                     // For this mock, we read last byte to determine if it failed sigverify
                     let sig = *packet.buffer_mut().last().unwrap() == 0;

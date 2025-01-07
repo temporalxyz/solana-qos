@@ -18,4 +18,5 @@ que = { workspace = true }
 ratatui = { workspace = true }
 solana-qos-common = { workspace = true }
 solana-qos-core = { workspace = true }
+solana-qos-internal-common = { workspace = true }
 timer = { workspace = true }

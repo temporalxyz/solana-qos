@@ -16,15 +16,17 @@ use solana_qos_common::{
     checked_drop_privileges,
     ipc_parameters::*,
     packet_bytes::PacketBytes,
-    partial_meta::QoSPartialMeta,
     remaining_meta::QoSRemainingMeta,
     shared_stats::Stats,
-    transaction_meta::QoSTransactionMeta,
-    u64_key,
     xxhash::{xxHash, xxHasher},
 };
 use solana_qos_core::{
     banking::TransactionContainer, get_page_size, try_process_packet,
+    u64_key,
+};
+use solana_qos_internal_common::{
+    packet_bytes, partial_meta::QoSPartialMeta,
+    transaction_meta::QoSTransactionMeta,
 };
 use timer::Timer;
 
@@ -288,7 +290,7 @@ fn process_failed_sigverify(
     qos_model: &mut IpSignerModel<16384, 16384>,
 ) {
     // Parse ip from packet
-    let packet = sigverify_failed.as_packet();
+    let packet = packet_bytes::as_packet(sigverify_failed);
     let IpAddr::V4(ip) = packet.meta().addr else {
         unreachable!(
             "ipv4 has been enforced by this stage: {:?}",
@@ -317,7 +319,7 @@ fn consume_transaction_packets(
         if let Some(packet_bytes) = consumer.pop() {
             // Process packet and score transaction
             let Ok(scored_transaction) = try_process_packet(
-                packet_bytes.as_packet(),
+                packet_bytes::as_packet(packet_bytes),
                 Some(recent_signatures),
                 qos_model,
                 qos_tx_partial_metas,

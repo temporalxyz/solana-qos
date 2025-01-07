@@ -3,9 +3,6 @@ use std::net::IpAddr;
 use agave_transaction_view::transaction_view::TransactionView;
 use error::{PacketProcessorError, PacketProcessorResult};
 use que::page_size::PageSize;
-use solana_qos_common::{
-    scored_transaction::ScoredTransaction, xxhash::xxHash,
-};
 use solana_sdk::{
     packet::{Packet, PACKET_DATA_SIZE},
     pubkey::Pubkey,
@@ -20,8 +17,15 @@ pub use {
         interface::QoSModel, models::ip_signer::IpSignerModel,
     },
     solana_qos_common::{
-        partial_meta::QoSPartialMeta, remaining_meta::QoSRemainingMeta,
-        shared_stats::Stats, sig_bytes, u64_key, xxhash::xxHasher,
+        remaining_meta::QoSRemainingMeta,
+        shared_stats::Stats,
+        xxhash::{xxHash, xxHasher},
+    },
+    solana_qos_internal_common::{
+        partial_meta::QoSPartialMeta,
+        scored_transaction::ScoredTransaction,
+        signature_bytes::{sig_bytes, u64_key},
+        xxhash::packet_hash,
     },
     timer::Timer,
 };
@@ -111,7 +115,7 @@ pub fn try_process_packet<
                 / partial_meta.cus.max(1) as f64);
 
     // Store partial meta
-    let packet_key = xxhasher.packet_hash(&packet);
+    let packet_key = packet_hash(xxhasher, &packet);
     match qos_tx_partial_metas.put(packet_key, partial_meta) {
         (Some((_packet_hash, partial_meta)), _) => {
             log::debug!(
