@@ -53,7 +53,7 @@ ordered-float = "4.2.0"
 qos-lru = { path = "lru" }
 qos-minmax = { path = "minmax" }
 qos-model = { path = "model" }
-que = "0.2.0"
+que = "0.4.0"
 rand = "0.8.0"
 rand_distr = "0.4.3"
 ratatui = "0.28.1"

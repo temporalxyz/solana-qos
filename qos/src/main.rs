@@ -1,6 +1,7 @@
 use std::{
     net::IpAddr,
-    sync::atomic::{AtomicBool, Ordering},
+    ptr::NonNull,
+    sync::atomic::{AtomicBool, AtomicU64, Ordering},
 };
 
 use clap::Parser;
@@ -108,6 +109,15 @@ fn main() {
     // Remove sudo privileges
     if let Err(e) = checked_drop_privileges() {
         panic!("{e:?}");
+    }
+
+    // Write seed to first 8 bytes of scheduler channel metadata
+    unsafe {
+        let metadata_ptr: NonNull<AtomicU64> =
+            sch_consumer.get_padding_ptr().cast();
+        metadata_ptr
+            .as_ref()
+            .store(args.xxhash_seed, Ordering::Release);
     }
 
     // Initialize QoS Model
