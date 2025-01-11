@@ -268,13 +268,15 @@ fn consume_remaining_metas(
             }
 
             // TODO: there may be a better way to do this and
-            // I don't like this hardcoded threshold
-            if qos_tx_complete_metas.len() > 10_000 {
+            // I don't like this hardcoded threshold.
+            // At current traffic (2.0.21) this is roughly every block.
+            if qos_tx_complete_metas.len() > 400 {
                 qos_model.update_model(
                     qos_tx_complete_metas.drain(..),
                     max_signers,
                     max_ips,
                 );
+                qos_model.save_ip_scores("scores");
                 break;
             }
         } else {
