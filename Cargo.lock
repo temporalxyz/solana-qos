@@ -2059,9 +2059,9 @@ dependencies = [
 
 [[package]]
 name = "que"
-version = "0.4.0"
+version = "0.4.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b3d91fc6b2eb0fc502e25a15574055a2bdda3dd9431845c227bba7575007d421"
+checksum = "628c35ce47d76f90f695b00dd9c142f4ff8a912dfaa0b62059f69976fa84ad18"
 dependencies = [
  "bytemuck",
  "nix",
